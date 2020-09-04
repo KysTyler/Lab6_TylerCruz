@@ -5,11 +5,14 @@
  */
 package lab6_tylercruz;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -50,27 +53,34 @@ public class Main extends javax.swing.JFrame {
         JT_Artista = new javax.swing.JTextField();
         JT_Album = new javax.swing.JTextField();
         JT_Ano = new javax.swing.JTextField();
-        JB_CrearCancion = new javax.swing.JButton();
+        JB_AgregarTable_NotPlaylist = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTable_Canciones = new javax.swing.JTable();
+        JTable_Songs_NOPlaylist = new javax.swing.JTable();
         JB_LimpiarTable = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         JB_CrearPlaylist = new javax.swing.JButton();
         JB_Modificar_Song = new javax.swing.JButton();
         JB_GuardarPlayList = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        JTable_Songs_YESPlaylist = new javax.swing.JTable();
+        JB_AgregarToPLaylist = new javax.swing.JButton();
+        JB_LimpiarNOPLAYLIST = new javax.swing.JButton();
         JD_ShowSongs = new javax.swing.JDialog();
         MainPanel_ShowSongs = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTable_ShowSongs = new javax.swing.JTable();
+        JB_Modificar_Song_SHOWSONGS = new javax.swing.JButton();
+        JB_Eliminar_SHOWSONGS = new javax.swing.JButton();
         JD_ModificarCancion = new javax.swing.JDialog();
         MainPanelCanciones = new javax.swing.JPanel();
         Main_MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         JMI_CrearCancion = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        JMI_AbrirPlaylist = new javax.swing.JMenuItem();
+        JMI_Modificar = new javax.swing.JMenuItem();
+        JMI_Remover = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        JMI_ShowSongs = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -102,14 +112,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        JB_CrearCancion.setText("Crear");
-        JB_CrearCancion.addActionListener(new java.awt.event.ActionListener() {
+        JB_AgregarTable_NotPlaylist.setText("Agregar Song to table thats not gonna be apart of playlist");
+        JB_AgregarTable_NotPlaylist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JB_CrearCancionActionPerformed(evt);
+                JB_AgregarTable_NotPlaylistActionPerformed(evt);
             }
         });
 
-        JTable_Canciones.setModel(new javax.swing.table.DefaultTableModel(
+        JTable_Songs_NOPlaylist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -125,7 +135,7 @@ public class Main extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(JTable_Canciones);
+        jScrollPane1.setViewportView(JTable_Songs_NOPlaylist);
 
         JB_LimpiarTable.setText("Limpiar");
         JB_LimpiarTable.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +167,38 @@ public class Main extends javax.swing.JFrame {
 
         JB_GuardarPlayList.setText("Guardar Playlist");
 
+        JTable_Songs_YESPlaylist.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Puntuacion", "Año", "Artista", "Album"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(JTable_Songs_YESPlaylist);
+
+        JB_AgregarToPLaylist.setText("Agregar Song to table that is gonna be apart of playlist");
+        JB_AgregarToPLaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_AgregarToPLaylistActionPerformed(evt);
+            }
+        });
+
+        JB_LimpiarNOPLAYLIST.setText("Limpiar");
+        JB_LimpiarNOPLAYLIST.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_LimpiarNOPLAYLISTActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout JD_CrearCacionLayout = new javax.swing.GroupLayout(JD_CrearCacion.getContentPane());
         JD_CrearCacion.getContentPane().setLayout(JD_CrearCacionLayout);
         JD_CrearCacionLayout.setHorizontalGroup(
@@ -165,21 +207,29 @@ public class Main extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(JD_CrearCacionLayout.createSequentialGroup()
-                        .addComponent(JB_GuardarPlayList)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JB_CrearPlaylist)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JB_Modificar_Song)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JB_LimpiarTable))
-                    .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(JD_CrearCacionLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(JB_LimpiarNOPLAYLIST)))
+                        .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(JD_CrearCacionLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jScrollPane3))
+                            .addGroup(JD_CrearCacionLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JB_Modificar_Song)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JB_LimpiarTable)))
+                        .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(JD_CrearCacionLayout.createSequentialGroup()
                         .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(JD_CrearCacionLayout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JT_Artista))
+                                .addComponent(JT_Artista, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
                             .addGroup(JD_CrearCacionLayout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,11 +245,18 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(JD_CrearCacionLayout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JB_CrearCancion)
-                                    .addComponent(JT_Album))))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                .addComponent(JT_Album)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JB_GuardarPlayList)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JB_CrearPlaylist)
+                        .addGap(55, 55, 55))))
+            .addGroup(JD_CrearCacionLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(JB_AgregarTable_NotPlaylist)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JB_AgregarToPLaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
         );
         JD_CrearCacionLayout.setVerticalGroup(
             JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,23 +276,28 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(JT_Artista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JT_Artista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JB_CrearPlaylist)
+                    .addComponent(JB_GuardarPlayList))
                 .addGap(18, 18, 18)
                 .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(JT_Album, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(JB_CrearCancion)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JB_AgregarTable_NotPlaylist)
+                    .addComponent(JB_AgregarToPLaylist))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JB_LimpiarTable)
                     .addComponent(jButton1)
-                    .addComponent(JB_CrearPlaylist)
                     .addComponent(JB_Modificar_Song)
-                    .addComponent(JB_GuardarPlayList))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(JB_LimpiarNOPLAYLIST))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         JTable_ShowSongs.setModel(new javax.swing.table.DefaultTableModel(
@@ -256,21 +318,44 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTable_ShowSongs);
 
+        JB_Modificar_Song_SHOWSONGS.setText("Modificar");
+        JB_Modificar_Song_SHOWSONGS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_Modificar_Song_SHOWSONGSActionPerformed(evt);
+            }
+        });
+
+        JB_Eliminar_SHOWSONGS.setText("Eliminar");
+        JB_Eliminar_SHOWSONGS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_Eliminar_SHOWSONGSActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MainPanel_ShowSongsLayout = new javax.swing.GroupLayout(MainPanel_ShowSongs);
         MainPanel_ShowSongs.setLayout(MainPanel_ShowSongsLayout);
         MainPanel_ShowSongsLayout.setHorizontalGroup(
             MainPanel_ShowSongsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanel_ShowSongsLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addGroup(MainPanel_ShowSongsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainPanel_ShowSongsLayout.createSequentialGroup()
+                        .addComponent(JB_Modificar_Song_SHOWSONGS)
+                        .addGap(18, 18, 18)
+                        .addComponent(JB_Eliminar_SHOWSONGS))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         MainPanel_ShowSongsLayout.setVerticalGroup(
             MainPanel_ShowSongsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanel_ShowSongsLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(58, 58, 58)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(MainPanel_ShowSongsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JB_Modificar_Song_SHOWSONGS)
+                    .addComponent(JB_Eliminar_SHOWSONGS))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout JD_ShowSongsLayout = new javax.swing.GroupLayout(JD_ShowSongs.getContentPane());
@@ -318,14 +403,24 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu1.add(JMI_CrearCancion);
 
-        jMenuItem2.setText("Abrir Playlist");
-        jMenu1.add(jMenuItem2);
+        JMI_AbrirPlaylist.setText("Abrir Playlist");
+        JMI_AbrirPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMI_AbrirPlaylistActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMI_AbrirPlaylist);
 
-        jMenuItem3.setText("Modificar Cancion");
-        jMenu1.add(jMenuItem3);
+        JMI_Modificar.setText("Modificar Cancion");
+        JMI_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMI_ModificarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMI_Modificar);
 
-        jMenuItem4.setText("Remover Cancion");
-        jMenu1.add(jMenuItem4);
+        JMI_Remover.setText("Remover Cancion");
+        jMenu1.add(JMI_Remover);
 
         jMenuItem5.setText("Salir");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -334,6 +429,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
+
+        JMI_ShowSongs.setText("Show Songs");
+        JMI_ShowSongs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMI_ShowSongsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMI_ShowSongs);
 
         Main_MenuBar.add(jMenu1);
 
@@ -366,7 +469,7 @@ public class Main extends javax.swing.JFrame {
 
     private void JB_LimpiarTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_LimpiarTableActionPerformed
         // TODO add your handling code here:
-        JTable_Canciones.setModel(new javax.swing.table.DefaultTableModel(
+        JTable_Songs_YESPlaylist.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
                     "Nombre", "Puntuacion", "Año", "Artista", "Album"
@@ -382,12 +485,12 @@ public class Main extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_JB_LimpiarTableActionPerformed
 
-    private void JB_CrearCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_CrearCancionActionPerformed
+    private void JB_AgregarTable_NotPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_AgregarTable_NotPlaylistActionPerformed
         // TODO add your handling code here:
         Cancion x = new Cancion(this.JT_Nombre.getText(), this.JSpinner_Puntuacion.getValue().toString(), this.JT_Ano.getText(),
                 this.JT_Artista.getText(), this.JT_Album.getText());
         DefaultTableModel modelo
-                = (DefaultTableModel) this.JTable_Canciones.getModel();
+                = (DefaultTableModel) this.JTable_Songs_NOPlaylist.getModel();
         Object[] newrow = {
             x.getNombre(),
             x.getPuntuacion(),
@@ -396,10 +499,9 @@ public class Main extends javax.swing.JFrame {
             x.getAlbum()
         };
         modelo.addRow(newrow);
-        this.JTable_Canciones.setModel(modelo);
-
-
-    }//GEN-LAST:event_JB_CrearCancionActionPerformed
+        this.JTable_Songs_NOPlaylist.setModel(modelo);
+        //canciones.add(x);
+    }//GEN-LAST:event_JB_AgregarTable_NotPlaylistActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
@@ -417,7 +519,7 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            ((DefaultTableModel) JTable_Canciones.getModel()).removeRow(JTable_Canciones.getSelectedRow());
+            ((DefaultTableModel) JTable_Songs_NOPlaylist.getModel()).removeRow(JTable_Songs_NOPlaylist.getSelectedRow());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar!");
         }
@@ -444,38 +546,28 @@ public class Main extends javax.swing.JFrame {
                     break;
                 case 2:
                     try {
-                        String edad = JOptionPane.showInputDialog("Ingrese la nueva edad");
-                        u.getPlaylist().get(opc).setPuntuacion(edad);
-                        u.getPlaylist();
+                        String puntuacion = JOptionPane.showInputDialog("Ingrese la nueva Puntuacion");
+                        u.getPlaylist().get(opc).setPuntuacion(puntuacion);
+                        //u.getPlaylist();
                     } catch (Exception e) {
                     }
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(this, "1. Humano 2. Amanto");
-                    int raza = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el indice de la nueva raza"));
-                    String newRaza = "";
-                    switch (raza) {
-                        case 1:
-                            newRaza = "Humano";
-                            break;
-                        case 2:
-                            newRaza = "Amanto";
-                            break;
-                    }
-                    u.getPlaylist().get(opc).setAno(newRaza);
+                    String ano = JOptionPane.showInputDialog("Ingrese el nuevo año");
+                    u.getPlaylist().get(opc).setAno(ano);
                     break;
                 case 4:
-                    int newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo poder del ser"));
+                    int newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
                     while (newPod < 1 || newPod > 10) {
                         JOptionPane.showMessageDialog(null, "INGRESE UN VALOR ENTRE 1 Y 10");
-                        newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo poder del ser"));
+                        newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
                     }
                     String newArtista = Integer.toString(newPod);
                     u.getPlaylist().get(opc).setArtista(newArtista);
                     break;
                 case 5:
-                    String newPlanet = JOptionPane.showInputDialog("Ingrese el nuevo planeta del ser");
-                    u.getPlaylist().get(opc).setAlbum(newPlanet);
+                    String newAlbum = JOptionPane.showInputDialog("Ingrese el nuevo album");
+                    u.getPlaylist().get(opc).setAlbum(newAlbum);
                     break;
                 default:
                     break;
@@ -490,12 +582,13 @@ public class Main extends javax.swing.JFrame {
     private void JB_CrearPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_CrearPlaylistActionPerformed
         // TODO add your handling code here:
         DefaultTableModel modelo
-                = (DefaultTableModel) this.JTable_Canciones.getModel();
-        int columnCount = JTable_Canciones.getColumnCount();
-        int rowNumber = JTable_Canciones.getRowCount();
-        if (canciones.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay seres vivos creados, no se puede crear Universo");
-        } else {
+                = (DefaultTableModel) this.JTable_Songs_YESPlaylist.getModel();
+        int columnCount = JTable_Songs_YESPlaylist.getColumnCount();
+        int rowNumber = JTable_Songs_YESPlaylist.getRowCount();
+        //System.out.println("Arraylist with seleted index: " + tasks);
+//        if (selectedrow <= 0) {
+//            JOptionPane.showMessageDialog(this, "No hay canciones selected para agregar!");
+//        } else {
             try {
                 JFileChooser fc = new JFileChooser();
                 FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de texto", "txt");
@@ -507,7 +600,7 @@ public class Main extends javax.swing.JFrame {
                     try {
                         fichero = null;
                         if (fc.getFileFilter().getDescription().equals("Archivo de texto")) {
-                            fichero = new File(fc.getSelectedFile().getPath());
+                            fichero = new File(fc.getSelectedFile().getPath() + ".txt");
                         } else {
                             fichero = fc.getSelectedFile();
                         }
@@ -519,17 +612,133 @@ public class Main extends javax.swing.JFrame {
                                     bw.write(((String) modelo.getValueAt(i, j)));
                                     bw.write("\n");
                                 } else {
-                                    bw.write(((String) modelo.getValueAt(i, j)) + ";");
+                                    bw.write(((String) modelo.getValueAt(i, j)) + "|");
                                 }
                             }
                         }
+                        bw.flush();
+                        JOptionPane.showMessageDialog(null, "Archivo guardado excitosamente");
                     } catch (Exception e) {
                     }
                 }
             } catch (Exception e) {
             }
+        //}
     }//GEN-LAST:event_JB_CrearPlaylistActionPerformed
-    }
+
+    private void JMI_AbrirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMI_AbrirPlaylistActionPerformed
+        // TODO add your handling code here:
+        String newS = "";
+        Scanner  sc =null;
+        DefaultTableModel modelo
+                = (DefaultTableModel) this.JTable_ShowSongs.getModel();
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        try {
+            JFileChooser jfc = new JFileChooser("./"); //donde deseamos que aparezca
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                fichero = jfc.getSelectedFile();//apunta hacia el objeto seleccionado
+                fr = new FileReader(fichero);//apunta hacia el archivo
+                br = new BufferedReader(fr);//apunta hacia el fileReader
+                String all = "",linea;
+                while((linea=br.readLine())!=null){
+                   newS = linea.replace('|', ';');
+                    System.out.println("Linea" + newS);
+                    all += newS;
+                    all += ";";
+                }
+                System.out.println("ALL: " + all);
+                sc = new Scanner(all);
+                sc.useDelimiter(";");
+                while (sc.hasNext()) {
+                    Object[] newrow = {
+                        sc.next(),
+                        sc.next(),
+                        sc.next(),
+                        sc.next(),
+                        sc.next()
+                    };
+                    modelo.addRow(newrow);
+                    //System.out.println("NewROW" + newrow);
+                    this.JTable_ShowSongs.setModel(modelo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            br.close();
+            fr.close();
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_JMI_AbrirPlaylistActionPerformed
+
+    private void JB_AgregarToPLaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_AgregarToPLaylistActionPerformed
+        // TODO add your handling code here:
+         Cancion x = new Cancion(this.JT_Nombre.getText(), this.JSpinner_Puntuacion.getValue().toString(), this.JT_Ano.getText(),
+                this.JT_Artista.getText(), this.JT_Album.getText());
+        DefaultTableModel modelo
+                = (DefaultTableModel) this.JTable_Songs_YESPlaylist.getModel();
+        Object[] newrow = {
+            x.getNombre(),
+            x.getPuntuacion(),
+            x.getAno(),
+            x.getArtista(),
+            x.getAlbum()
+        };
+        modelo.addRow(newrow);
+        this.JTable_Songs_YESPlaylist.setModel(modelo);
+    }//GEN-LAST:event_JB_AgregarToPLaylistActionPerformed
+
+    private void JB_LimpiarNOPLAYLISTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_LimpiarNOPLAYLISTActionPerformed
+        // TODO add your handling code here:
+        JTable_Songs_NOPlaylist.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Puntuacion", "Año", "Artista", "Album"
+                }
+        ) {
+            Class[] types = new Class[]{
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+        });
+    }//GEN-LAST:event_JB_LimpiarNOPLAYLISTActionPerformed
+
+    private void JMI_ShowSongsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMI_ShowSongsActionPerformed
+        // TODO add your handling code here:
+        JD_ShowSongs.setModal(true);
+        JD_ShowSongs.pack();
+        JD_ShowSongs.setLocationRelativeTo(this);
+        JD_ShowSongs.setVisible(true);
+    }//GEN-LAST:event_JMI_ShowSongsActionPerformed
+
+    private void JMI_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMI_ModificarActionPerformed
+        // TODO add your handling code here:
+        JD_ShowSongs.setModal(true);
+        JD_ShowSongs.pack();
+        JD_ShowSongs.setLocationRelativeTo(this);
+        JD_ShowSongs.setVisible(true);
+    }//GEN-LAST:event_JMI_ModificarActionPerformed
+
+    private void JB_Modificar_Song_SHOWSONGSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Modificar_Song_SHOWSONGSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_Modificar_Song_SHOWSONGSActionPerformed
+
+    private void JB_Eliminar_SHOWSONGSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Eliminar_SHOWSONGSActionPerformed
+        // TODO add your handling code here:
+        try {
+        ((DefaultTableModel)JTable_ShowSongs.getModel()).removeRow(JTable_ShowSongs.getSelectedRow());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar!");
+        }
+    }//GEN-LAST:event_JB_Eliminar_SHOWSONGSActionPerformed
+    
 
     /**
      * @param args the command line arguments
@@ -568,22 +777,31 @@ public class Main extends javax.swing.JFrame {
     private ArrayList<Cancion> canciones = new ArrayList();
     File fichero = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JB_CrearCancion;
+    private javax.swing.JButton JB_AgregarTable_NotPlaylist;
+    private javax.swing.JButton JB_AgregarToPLaylist;
     private javax.swing.JButton JB_CrearPlaylist;
+    private javax.swing.JButton JB_Eliminar_SHOWSONGS;
     private javax.swing.JButton JB_GuardarPlayList;
+    private javax.swing.JButton JB_LimpiarNOPLAYLIST;
     private javax.swing.JButton JB_LimpiarTable;
     private javax.swing.JButton JB_Modificar_Song;
+    private javax.swing.JButton JB_Modificar_Song_SHOWSONGS;
     private javax.swing.JDialog JD_CrearCacion;
     private javax.swing.JDialog JD_ModificarCancion;
     private javax.swing.JDialog JD_ShowSongs;
+    private javax.swing.JMenuItem JMI_AbrirPlaylist;
     private javax.swing.JMenuItem JMI_CrearCancion;
+    private javax.swing.JMenuItem JMI_Modificar;
+    private javax.swing.JMenuItem JMI_Remover;
+    private javax.swing.JMenuItem JMI_ShowSongs;
     private javax.swing.JSpinner JSpinner_Puntuacion;
     private javax.swing.JTextField JT_Album;
     private javax.swing.JTextField JT_Ano;
     private javax.swing.JTextField JT_Artista;
     private javax.swing.JTextField JT_Nombre;
-    private javax.swing.JTable JTable_Canciones;
     private javax.swing.JTable JTable_ShowSongs;
+    private javax.swing.JTable JTable_Songs_NOPlaylist;
+    private javax.swing.JTable JTable_Songs_YESPlaylist;
     private javax.swing.JPanel MainPanelCanciones;
     private javax.swing.JPanel MainPanel_ShowSongs;
     private javax.swing.JMenuBar Main_MenuBar;
@@ -595,11 +813,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }
