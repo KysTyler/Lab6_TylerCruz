@@ -57,9 +57,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable_Songs_NOPlaylist = new javax.swing.JTable();
         JB_LimpiarTable = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         JB_CrearPlaylist = new javax.swing.JButton();
-        JB_Modificar_Song = new javax.swing.JButton();
         JB_GuardarPlayList = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         JTable_Songs_YESPlaylist = new javax.swing.JTable();
@@ -78,7 +76,6 @@ public class Main extends javax.swing.JFrame {
         JMI_CrearCancion = new javax.swing.JMenuItem();
         JMI_AbrirPlaylist = new javax.swing.JMenuItem();
         JMI_Modificar = new javax.swing.JMenuItem();
-        JMI_Remover = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         JMI_ShowSongs = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -144,24 +141,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         JB_CrearPlaylist.setText("Crear Playlist");
         JB_CrearPlaylist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_CrearPlaylistActionPerformed(evt);
-            }
-        });
-
-        JB_Modificar_Song.setText("Modificar");
-        JB_Modificar_Song.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JB_Modificar_SongActionPerformed(evt);
             }
         });
 
@@ -218,10 +201,6 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jScrollPane3))
                             .addGroup(JD_CrearCacionLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(JB_Modificar_Song)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JB_LimpiarTable)))
                         .addContainerGap(33, Short.MAX_VALUE))
                     .addGroup(JD_CrearCacionLayout.createSequentialGroup()
@@ -294,8 +273,6 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(JD_CrearCacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JB_LimpiarTable)
-                    .addComponent(jButton1)
-                    .addComponent(JB_Modificar_Song)
                     .addComponent(JB_LimpiarNOPLAYLIST))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -411,16 +388,13 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu1.add(JMI_AbrirPlaylist);
 
-        JMI_Modificar.setText("Modificar Cancion");
+        JMI_Modificar.setText("Modificar/Remove Cancion");
         JMI_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMI_ModificarActionPerformed(evt);
             }
         });
         jMenu1.add(JMI_Modificar);
-
-        JMI_Remover.setText("Remover Cancion");
-        jMenu1.add(JMI_Remover);
 
         jMenuItem5.setText("Salir");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -516,69 +490,6 @@ public class Main extends javax.swing.JFrame {
         JD_CrearCacion.setVisible(true);
     }//GEN-LAST:event_JMI_CrearCancionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        try {
-            ((DefaultTableModel) JTable_Songs_NOPlaylist.getModel()).removeRow(JTable_Songs_NOPlaylist.getSelectedRow());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar!");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void JB_Modificar_SongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Modificar_SongActionPerformed
-        // TODO add your handling code here:
-        try {
-            Playlist u = new Playlist();
-            u.adminCancion(fichero.getPath());
-            u.ReadArchivo();
-            String aux = "";
-            for (Cancion sv : u.getPlaylist()) {
-                aux += u.getPlaylist().indexOf(sv) + ">" + sv.getNombre() + "\n";
-            }
-            JOptionPane.showMessageDialog(null, aux);
-            int opc = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el indice a modificar"));
-            JOptionPane.showMessageDialog(null, "1. Nombre\n2. Puntuacion\n3. Ano\n4. Artista\n5. Album");
-            int mod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el punto a modificar a modificar"));
-            switch (mod) {
-                case 1:
-                    String nombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre");
-                    u.getPlaylist().get(opc).setNombre(nombre);
-                    break;
-                case 2:
-                    try {
-                        String puntuacion = JOptionPane.showInputDialog("Ingrese la nueva Puntuacion");
-                        u.getPlaylist().get(opc).setPuntuacion(puntuacion);
-                        //u.getPlaylist();
-                    } catch (Exception e) {
-                    }
-                    break;
-                case 3:
-                    String ano = JOptionPane.showInputDialog("Ingrese el nuevo año");
-                    u.getPlaylist().get(opc).setAno(ano);
-                    break;
-                case 4:
-                    int newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
-                    while (newPod < 1 || newPod > 10) {
-                        JOptionPane.showMessageDialog(null, "INGRESE UN VALOR ENTRE 1 Y 10");
-                        newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
-                    }
-                    String newArtista = Integer.toString(newPod);
-                    u.getPlaylist().get(opc).setArtista(newArtista);
-                    break;
-                case 5:
-                    String newAlbum = JOptionPane.showInputDialog("Ingrese el nuevo album");
-                    u.getPlaylist().get(opc).setAlbum(newAlbum);
-                    break;
-                default:
-                    break;
-            }
-            JOptionPane.showMessageDialog(null, "Cambio realizado exitosamente, cargue el universo nuevamente para revisarlo");
-            u.WriteArchivo();
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_JB_Modificar_SongActionPerformed
-
     private void JB_CrearPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_CrearPlaylistActionPerformed
         // TODO add your handling code here:
         DefaultTableModel modelo
@@ -589,47 +500,47 @@ public class Main extends javax.swing.JFrame {
 //        if (selectedrow <= 0) {
 //            JOptionPane.showMessageDialog(this, "No hay canciones selected para agregar!");
 //        } else {
-            try {
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de texto", "txt");
-                fc.addChoosableFileFilter(filtro);
-                int seleccion = fc.showSaveDialog(this);
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                if (seleccion == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        fichero = null;
-                        if (fc.getFileFilter().getDescription().equals("Archivo de texto")) {
-                            fichero = new File(fc.getSelectedFile().getPath() + ".txt");
-                        } else {
-                            fichero = fc.getSelectedFile();
-                        }
-                        fw = new FileWriter(fichero);//apunta al archivo
-                        bw = new BufferedWriter(fw);//apunta al canal
-                        for (int i = 0; i < rowNumber; i++) {
-                            for (int j = 0; j < columnCount; j++) {
-                                if (j == columnCount - 1) {
-                                    bw.write(((String) modelo.getValueAt(i, j)));
-                                    bw.write("\n");
-                                } else {
-                                    bw.write(((String) modelo.getValueAt(i, j)) + "|");
-                                }
+        try {
+            JFileChooser fc = new JFileChooser();
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de texto", "txt");
+            fc.addChoosableFileFilter(filtro);
+            int seleccion = fc.showSaveDialog(this);
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                try {
+                    fichero = null;
+                    if (fc.getFileFilter().getDescription().equals("Archivo de texto")) {
+                        fichero = new File(fc.getSelectedFile().getPath() + ".txt");
+                    } else {
+                        fichero = fc.getSelectedFile();
+                    }
+                    fw = new FileWriter(fichero);//apunta al archivo
+                    bw = new BufferedWriter(fw);//apunta al canal
+                    for (int i = 0; i < rowNumber; i++) {
+                        for (int j = 0; j < columnCount; j++) {
+                            if (j == columnCount - 1) {
+                                bw.write(((String) modelo.getValueAt(i, j)));
+                                bw.write("\n");
+                            } else {
+                                bw.write(((String) modelo.getValueAt(i, j)) + "|");
                             }
                         }
-                        bw.flush();
-                        JOptionPane.showMessageDialog(null, "Archivo guardado excitosamente");
-                    } catch (Exception e) {
                     }
+                    bw.flush();
+                    JOptionPane.showMessageDialog(null, "Archivo guardado excitosamente");
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
             }
+        } catch (Exception e) {
+        }
         //}
     }//GEN-LAST:event_JB_CrearPlaylistActionPerformed
 
     private void JMI_AbrirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMI_AbrirPlaylistActionPerformed
         // TODO add your handling code here:
         String newS = "";
-        Scanner  sc =null;
+        Scanner sc = null;
         DefaultTableModel modelo
                 = (DefaultTableModel) this.JTable_ShowSongs.getModel();
         File fichero = null;
@@ -642,9 +553,9 @@ public class Main extends javax.swing.JFrame {
                 fichero = jfc.getSelectedFile();//apunta hacia el objeto seleccionado
                 fr = new FileReader(fichero);//apunta hacia el archivo
                 br = new BufferedReader(fr);//apunta hacia el fileReader
-                String all = "",linea;
-                while((linea=br.readLine())!=null){
-                   newS = linea.replace('|', ';');
+                String all = "", linea;
+                while ((linea = br.readLine()) != null) {
+                    newS = linea.replace('|', ';');
                     System.out.println("Linea" + newS);
                     all += newS;
                     all += ";";
@@ -677,7 +588,7 @@ public class Main extends javax.swing.JFrame {
 
     private void JB_AgregarToPLaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_AgregarToPLaylistActionPerformed
         // TODO add your handling code here:
-         Cancion x = new Cancion(this.JT_Nombre.getText(), this.JSpinner_Puntuacion.getValue().toString(), this.JT_Ano.getText(),
+        Cancion x = new Cancion(this.JT_Nombre.getText(), this.JSpinner_Puntuacion.getValue().toString(), this.JT_Ano.getText(),
                 this.JT_Artista.getText(), this.JT_Album.getText());
         DefaultTableModel modelo
                 = (DefaultTableModel) this.JTable_Songs_YESPlaylist.getModel();
@@ -712,6 +623,8 @@ public class Main extends javax.swing.JFrame {
 
     private void JMI_ShowSongsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMI_ShowSongsActionPerformed
         // TODO add your handling code here:
+        this.JB_Modificar_Song_SHOWSONGS.setEnabled(false);
+        this.JB_Eliminar_SHOWSONGS.setEnabled(false);
         JD_ShowSongs.setModal(true);
         JD_ShowSongs.pack();
         JD_ShowSongs.setLocationRelativeTo(this);
@@ -724,21 +637,149 @@ public class Main extends javax.swing.JFrame {
         JD_ShowSongs.pack();
         JD_ShowSongs.setLocationRelativeTo(this);
         JD_ShowSongs.setVisible(true);
+//        try {
+//            Playlist u = new Playlist();
+//            u.adminCancion(fichero.getPath());
+//            u.ReadArchivo();
+//            String aux = "";
+//            for (Cancion sv : u.getPlaylist()) {
+//                aux += u.getPlaylist().indexOf(sv) + ">" + sv.getNombre() + "\n";
+//            }
+//            JOptionPane.showMessageDialog(null, aux);
+//            int opc = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el indice a modificar"));
+//            JOptionPane.showMessageDialog(null, "1. Nombre\n2. Puntuacion\n3. Ano\n4. Artista\n5. Album");
+//            int mod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el punto a modificar a modificar"));
+//            switch (mod) {
+//                case 1:
+//                    String nombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre");
+//                    u.getPlaylist().get(opc).setNombre(nombre);
+//                    break;
+//                case 2:
+//                    try {
+//                        String puntuacion = JOptionPane.showInputDialog("Ingrese la nueva Puntuacion");
+//                        u.getPlaylist().get(opc).setPuntuacion(puntuacion);
+//                        //u.getPlaylist();
+//                    } catch (Exception e) {
+//                    }
+//                    break;
+//                case 3:
+//                    String ano = JOptionPane.showInputDialog("Ingrese el nuevo año");
+//                    u.getPlaylist().get(opc).setAno(ano);
+//                    break;
+//                case 4:
+//                    int newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
+//                    while (newPod < 1 || newPod > 10) {
+//                        JOptionPane.showMessageDialog(null, "INGRESE UN VALOR ENTRE 1 Y 10");
+//                        newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo puntuacion del cancion"));
+//                    }
+//                    String newArtista = Integer.toString(newPod);
+//                    u.getPlaylist().get(opc).setArtista(newArtista);
+//                    break;
+//                case 5:
+//                    String newAlbum = JOptionPane.showInputDialog("Ingrese el nuevo album");
+//                    u.getPlaylist().get(opc).setAlbum(newAlbum);
+//                    break;
+//                default:
+//                    break;
+//            }
+//            JOptionPane.showMessageDialog(null, "Cambio realizado exitosamente, cargue el universo nuevamente para revisarlo");
+//            u.WriteArchivo();
+//        } catch (IOException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
     }//GEN-LAST:event_JMI_ModificarActionPerformed
 
     private void JB_Modificar_Song_SHOWSONGSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Modificar_Song_SHOWSONGSActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel modelo
+                = (DefaultTableModel) this.JTable_ShowSongs.getModel();
+        int columnCount = JTable_ShowSongs.getColumnCount();
+        int rowNumber = JTable_ShowSongs.getRowCount();
+        int row = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la fila que deaseas cambiar!"));
+        int column = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la columna que deaseas cambiar!"));
+        String data = JOptionPane.showInputDialog(null, "Ingrese el nuevo data");
+        modelo.setValueAt(data, row, column);
+        if (JOptionPane.showConfirmDialog(null, "Are you sure you're done modifying?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // yes option
+            String ruta = "./" + JOptionPane.showInputDialog(null, "Ingrese la ruta del playlist (playlist.txt)");
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            try {
+                File archivo = new File(ruta);
+                if (archivo.exists()) {
+                    fw = new FileWriter(archivo);//apunta al archivo
+                    bw = new BufferedWriter(fw);//apunta al canal
+                    for (int i = 0; i < rowNumber; i++) {
+                        for (int j = 0; j < columnCount; j++) {
+                            if (j == columnCount - 1) {
+                                bw.write(((String) modelo.getValueAt(i, j)));
+                                bw.write("\n");
+                            } else {
+                                bw.write(((String) modelo.getValueAt(i, j)) + "|");
+                            }
+                        }
+                    }
+                    bw.flush();
+                    JOptionPane.showMessageDialog(this, "Archivo updated excitosamente");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "No se pudo hacer el accion");
+                e.printStackTrace();
+            }
+        } else {
+            // no option
+        }
+
+
     }//GEN-LAST:event_JB_Modificar_Song_SHOWSONGSActionPerformed
 
     private void JB_Eliminar_SHOWSONGSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Eliminar_SHOWSONGSActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel modelo
+                = (DefaultTableModel) this.JTable_ShowSongs.getModel();
         try {
-        ((DefaultTableModel)JTable_ShowSongs.getModel()).removeRow(JTable_ShowSongs.getSelectedRow());
+            ((DefaultTableModel) JTable_ShowSongs.getModel()).removeRow(JTable_ShowSongs.getSelectedRow());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar!");
         }
+        int columnCount = JTable_ShowSongs.getColumnCount();
+        int rowNumber = JTable_ShowSongs.getRowCount();
+        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // yes option
+             String ruta = "./" + JOptionPane.showInputDialog(null, "Ingrese la ruta del playlist (playlist.txt)");
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            File archivo = new File(ruta);
+            if (archivo.exists()) {
+                fw = new FileWriter(archivo);//apunta al archivo
+                bw = new BufferedWriter(fw);//apunta al canal
+                for (int i = 0; i < rowNumber; i++) {
+                    for (int j = 0; j < columnCount; j++) {
+                        if (j == columnCount - 1) {
+                            bw.write(((String) modelo.getValueAt(i, j)));
+                            bw.write("\n");
+                        } else {
+                            bw.write(((String) modelo.getValueAt(i, j)) + "|");
+                        }
+                    }
+                }
+                bw.flush();
+                JOptionPane.showMessageDialog(this, "Archivo updated excitosamente");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo hacer el accion");
+            e.printStackTrace();
+        }
+        } else {
+            // no option
+        }
+       
+
     }//GEN-LAST:event_JB_Eliminar_SHOWSONGSActionPerformed
-    
 
     /**
      * @param args the command line arguments
@@ -784,7 +825,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton JB_GuardarPlayList;
     private javax.swing.JButton JB_LimpiarNOPLAYLIST;
     private javax.swing.JButton JB_LimpiarTable;
-    private javax.swing.JButton JB_Modificar_Song;
     private javax.swing.JButton JB_Modificar_Song_SHOWSONGS;
     private javax.swing.JDialog JD_CrearCacion;
     private javax.swing.JDialog JD_ModificarCancion;
@@ -792,7 +832,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMI_AbrirPlaylist;
     private javax.swing.JMenuItem JMI_CrearCancion;
     private javax.swing.JMenuItem JMI_Modificar;
-    private javax.swing.JMenuItem JMI_Remover;
     private javax.swing.JMenuItem JMI_ShowSongs;
     private javax.swing.JSpinner JSpinner_Puntuacion;
     private javax.swing.JTextField JT_Album;
@@ -805,7 +844,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel MainPanelCanciones;
     private javax.swing.JPanel MainPanel_ShowSongs;
     private javax.swing.JMenuBar Main_MenuBar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

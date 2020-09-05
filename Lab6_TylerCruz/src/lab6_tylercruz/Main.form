@@ -25,10 +25,6 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="JB_Modificar_Song" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="JB_LimpiarTable" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -122,8 +118,6 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JB_LimpiarTable" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JB_Modificar_Song" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JB_LimpiarNOPLAYLIST" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -231,28 +225,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JB_LimpiarTableActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="JB_CrearPlaylist">
           <Properties>
             <Property name="text" type="java.lang.String" value="Crear Playlist"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JB_CrearPlaylistActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="JB_Modificar_Song">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Modificar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JB_Modificar_SongActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="JB_GuardarPlayList">
@@ -432,16 +410,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMI_Modificar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Modificar Cancion"/>
+                <Property name="text" type="java.lang.String" value="Modificar/Remove Cancion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMI_ModificarActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMI_Remover">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Remover Cancion"/>
-              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
